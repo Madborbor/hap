@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Card for Mew</title>
+    <style>
+        /* CSS เดิมจากไฟล์ hap.txt ของคุณ */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #f48fb1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f06292;
+            clip-path: polygon(0 0, 50% 50%, 100% 0);
+            transition: transform 0.5s ease;
+            transform-origin: top;
+            z-index: 3;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            width: 260px;
+            height: 350px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+            z-index: 1;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .heart {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #d81b60;
+            font-size: 30px;
+            z-index: 4;
+            transition: opacity 0.3s ease;
+        }
+
+        /* เพิ่มเติมสไตล์ให้ปุ่มดูชัดเจนขึ้น */
+        .instruction {
+            position: absolute;
+            top: 220px;
+            width: 100%;
+            text-align: center;
+            color: #d81b60;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" onclick="openLetter()">
+        <div class="envelope">
+            <div class="cover"></div>
+            <div class="heart">❤️</div>
+            <div class="letter">
+                <img src="cake-icon.png" alt="Cake" style="width: 50px;">
+                <h2 style="color: #d81b60;">สุขสันต์วันเกิดน้าาคุณมิวว</h2>
+                <p>💖 Happy Birthday 💖</p>
+                <div style="text-align: left; font-size: 14px; line-height: 1.6;">
+                    ☀️ ขอให้มีความสุขมากๆ ครับ<br>
+                    🌈 สมหวังในทุกๆ เรื่อง<br>
+                    💪 ร่างกายแข็งแรง ไม่เจ็บไม่ป่วย<br>
+                    🍀 เจอแต่สิ่งดีๆ คนดีๆ<br>
+                    🐱 ขอให้แฮปๆ น่ารักกับคุณมิวมากๆ<br>
+                    🍜 ได้กินของอร่อยๆ ทุกวัน<br>
+                    🎯 ได้ทำในสิ่งที่อยากทำ<br>
+                    🧘 ไม่ปวดหลังด้วยนะครับ<br>
+                    💰 เฮงๆ รวยๆ เลยครับ
+                </div>
+                <p style="text-align: right; color: #f06292; font-size: 12px;">ด้วยรัก 💗</p>
+            </div>
+        </div>
+        <div class="instruction">แตะซองเพื่อเปิดจดหมาย</div>
+    </div>
+
+    <audio id="myAudio" loop>
+        <source src="consider.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let isOpen = false;
+
+        function openLetter() {
+            if (isOpen) return;
+            
+            const cover = document.querySelector('.cover');
+            const letter = document.querySelector('.letter');
+            const heart = document.querySelector('.heart');
+
+            cover.style.transform = 'rotateX(180deg)';
+            heart.style.opacity = '0';
+            
+            setTimeout(() => {
+                letter.style.transform = 'translateY(-150px)';
+                letter.style.zIndex = '2';
+                playMusicWithFade(); 
+            }, 500);
+
+            isOpen = true;
+        }
+
+        function playMusicWithFade() {
+            var audio = document.getElementById("myAudio");
+            
+            audio.currentTime = 70; 
+            
+            audio.volume = 0; 
+            audio.play().catch(function(error) {
+                console.log("ต้องการการคลิกจากผู้ใช้ก่อนเล่นเพลง");
+            });
+            
+            var targetVolume = 0.5;
+            var fadeAudio = setInterval(function () {
+                if (audio.volume < targetVolume) {
+                    audio.volume = Math.min(targetVolume, audio.volume + 0.05);
+                } else {
+                    clearInterval(fadeAudio);
+                }
+            }, 200);
+        }
+    </script>
+</body>
+</html>
