@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Kanit:wght@300;400;500&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: radial-gradient(circle at center, #1b122e 0%, #0c0716 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .moon {
+      position: absolute;
+      top: 35px;
+      right: 45px;
+      width: 70px;
+      height: 70px;
+      background: #fffdf0;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 253, 240, 0.8), 0 0 45px rgba(255, 253, 240, 0.3);
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .main-card {
+      background: #f2e9ef;
+      width: 90%;
+      max-width: 620px;
+      border-radius: 20px;
+      padding: 35px 25px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    img.interactive-img {
+      width: 100%;
+      max-width: 480px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    img.interactive-img:hover {
+      transform: scale(1.02);
+    }
+
+    .hint {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #7a6575;
+    }
+
+    .envelope-box {
+      background: #f8c0d6;
+      width: 230px;
+      height: 145px;
+      border-radius: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      border: 1px solid #f0a3c2;
+    }
+
+    .envelope-seal {
+      width: 36px;
+      height: 36px;
+      background: #8e183e;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f7d070;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .envelope-text {
+      font-family: 'Charm', cursive;
+      font-size: 1.25rem;
+      color: #8c2a4d;
+      font-weight: bold;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #d36585, #b33961);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(179, 57, 97, 0.3);
+      transition: transform 0.2s, background 0.3s;
+      margin-top: 10px;
+    }
+    .action-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #e07192, #c4426d);
+    }
+
+    .wish-paper {
+      background: #fffdf8;
+      border: 2px dashed #f1a7be;
+      border-radius: 16px;
+      padding: 25px 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .wish-paper h2 {
+      font-family: 'Charm', cursive;
+      font-size: 2.2rem;
+      color: #a83258;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .wish-paper p {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #55444e;
+      margin-bottom: 12px;
+    }
+
+    .icons-row {
+      margin-top: 10px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="moon"></div>
+  <div class="star" style="top: 12%; left: 18%; width: 3px; height: 3px;"></div>
+  <div class="star" style="top: 22%; left: 75%; width: 2px; height: 2px;"></div>
+  <div class="star" style="top: 68%; left: 12%; width: 3px; height: 3px;"></div>
+  <div class="star" style="top: 82%; left: 80%; width: 2px; height: 2px;"></div>
+  <div class="star" style="top: 45%; left: 88%; width: 3px; height: 3px;"></div>
+
+  <div class="main-card">
+
+    <!-- ขั้นตอนที่ 1: รูปเค้ก -->
+    <div id="step1" class="step active">
+      <img src="https://images2.imgbox.com/39/3e/NqQ2GfF1_o.jpg" alt="Cake" class="interactive-img" onclick="handleCakeClick()">
+      <p class="hint">🎂 กดที่เค้กเพื่อเป่าเทียนและจุดพลุ!</p>
+    </div>
+
+    <!-- ขั้นตอนที่ 2: รูปดอกไม้ -->
+    <div id="step2" class="step">
+      <img src="https://images2.imgbox.com/a8/f2/Yk5eP34Z_o.jpg" alt="Flowers" class="interactive-img" onclick="handleFlowerClick()">
+      <p class="hint">🌸 กดที่ดอกไม้เพื่อรับจดหมาย</p>
+    </div>
+
+    <!-- ขั้นตอนที่ 3: ซองจดหมาย -->
+    <div id="step3" class="step">
+      <p class="hint" style="margin-top:0; margin-bottom:10px;">กดที่ซองจดหมายเพื่อเปิดอ่านข้อความข้างในนะ</p>
+      
+      <div class="envelope-box" onclick="handleEnvelopeClick()">
+        <div class="envelope-seal">🌙</div>
+        <div class="envelope-text">For You ✨</div>
+      </div>
+
+      <button class="action-btn" onclick="handleEnvelopeClick()">คลิกเปิดซองจดหมาย ✨</button>
+    </div>
+
+    <!-- ขั้นตอนที่ 4: คำอวยพร -->
+    <div id="step4" class="step">
+      <div class="wish-paper">
+        <h2>Happy Birthday 🎉💖</h2>
+        
+        <p>สุขสันต์วันเกิดนะคนเก่ง! 🎂✨</p>
+        
+        <p>
+          ขอให้ปีนี้เป็นปีที่ใจดีกับเธอมากๆ มีความสุขในทุกๆ วัน<br>
+          ยิ้มเยอะๆ ได้กินเค้กสตอเบอรี่ชีสเค้ก บลูเบอร์รี่พาย ขนมชั้นอร่อยๆ<br>
+          และเติบโตอย่างมีความสุขท่ามกลางดอกลิลลี่ และดอกไลแลคสวยๆ นะครับ 🌸💜
+        </p>
+        
+        <p>
+          ขอให้ได้ดื่มนมชมพูหวานกำลังดี ชาเขียวหอมๆ<br>
+          และมีน้องแมว ซินซิล่า ซามอยด์ น่ารักๆ คอยฮีลใจอยู่เสมอ 🐱🐶✨
+        </p>
+        
+        <p>ขอบคุณที่เป็นรอยยิ้มและความสดใสให้โลกใบนี้นะ! 💖🌙</p>
+        
+        <div class="icons-row">🌸 🌙 🐱 🍓 ✨</div>
+      </div>
+
+      <button class="action-btn" style="margin-top: 20px;" onclick="location.reload()">เล่นอีกครั้ง 🔄</button>
+    </div>
+
+  </div>
+
+  <script>
+    function showStep(stepId) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById(stepId).classList.add('active');
+    }
+
+    function handleCakeClick() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      setTimeout(() => {
+        showStep('step2');
+      }, 1200);
+    }
+
+    function handleFlowerClick() {
+      showStep('step3');
+    }
+
+    function handleEnvelopeClick() {
+      confetti({
+        particleCount: 80,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+      showStep('step4');
+    }
+  </script>
+</body>
+</html>
