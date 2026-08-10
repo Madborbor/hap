@@ -83,8 +83,9 @@
       cursor: pointer;
       transition: transform 0.3s ease;
     }
-    img.interactive-img:hover {
+    img.interactive-img:hover, img.interactive-img:focus {
       transform: scale(1.02);
+      outline: 3px solid #b33961;
     }
 
     .hint {
@@ -107,6 +108,11 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       margin: 20px 0;
       border: 1px solid #f0a3c2;
+      transition: transform 0.2s;
+    }
+    .envelope-box:hover, .envelope-box:focus {
+      transform: translateY(-2px);
+      outline: 3px solid #8e183e;
     }
 
     .envelope-seal {
@@ -142,9 +148,10 @@
       transition: transform 0.2s, background 0.3s;
       margin-top: 10px;
     }
-    .action-btn:hover {
+    .action-btn:hover, .action-btn:focus {
       transform: translateY(-2px);
       background: linear-gradient(135deg, #e07192, #c4426d);
+      outline: none;
     }
 
     .wish-paper {
@@ -190,13 +197,13 @@
 
     <!-- ขั้นตอนที่ 1: รูปเค้ก -->
     <div id="step1" class="step active">
-      <img src="https://images2.imgbox.com/39/3e/NqQ2GfF1_o.jpg" alt="Cake" class="interactive-img" onclick="handleCakeClick()">
+      <img src="https://images2.imgbox.com/39/3e/NqQ2GfF1_o.jpg" alt="เค้กวันเกิด" class="interactive-img" tabindex="0" onclick="handleCakeClick()" onkeydown="if(event.key==='Enter'||event.key===' ')handleCakeClick()">
       <p class="hint">🎂 กดที่เค้กเพื่อเป่าเทียนและจุดพลุ!</p>
     </div>
 
     <!-- ขั้นตอนที่ 2: รูปดอกไม้ -->
     <div id="step2" class="step">
-      <img src="https://images2.imgbox.com/a8/f2/Yk5eP34Z_o.jpg" alt="Flowers" class="interactive-img" onclick="handleFlowerClick()">
+      <img src="https://images2.imgbox.com/a8/f2/Yk5eP34Z_o.jpg" alt="ดอกไม้" class="interactive-img" tabindex="0" onclick="handleFlowerClick()" onkeydown="if(event.key==='Enter'||event.key===' ')handleFlowerClick()">
       <p class="hint">🌸 กดที่ดอกไม้เพื่อรับจดหมาย</p>
     </div>
 
@@ -204,7 +211,7 @@
     <div id="step3" class="step">
       <p class="hint" style="margin-top:0; margin-bottom:10px;">กดที่ซองจดหมายเพื่อเปิดอ่านข้อความข้างในนะ</p>
       
-      <div class="envelope-box" onclick="handleEnvelopeClick()">
+      <div class="envelope-box" tabindex="0" role="button" aria-label="เปิดซองจดหมาย" onclick="handleEnvelopeClick()" onkeydown="if(event.key==='Enter'||event.key===' ')handleEnvelopeClick()">
         <div class="envelope-seal">🌙</div>
         <div class="envelope-text">For You ✨</div>
       </div>
@@ -217,7 +224,7 @@
       <div class="wish-paper">
         <h2>Happy Birthday 🎉💖</h2>
         
-        <p>สุขสันต์วันเกิดนะคนเก่ง! 🎂✨</p>
+        <p>สุขสันต์วันเกิดนะครับที่ริน! 🎂✨</p>
         
         <p>
           ขอให้ปีนี้เป็นปีที่ใจดีกับเธอมากๆ มีความสุขในทุกๆ วัน<br>
